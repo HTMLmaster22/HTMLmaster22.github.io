@@ -4,8 +4,36 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Abdelrahman Mohamed — IT Systems Developer</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
 <style>
+/* LANG TOGGLE BTN */
+#lang-btn{
+  background:rgba(6,182,212,0.1);border:1px solid rgba(6,182,212,0.3);
+  color:var(--cyan);padding:7px 16px;border-radius:8px;
+  font-size:.78rem;font-weight:700;letter-spacing:.06em;
+  cursor:none;transition:all .2s;white-space:nowrap;
+}
+#lang-btn:hover{background:rgba(6,182,212,0.2);border-color:var(--cyan);}
+
+/* RTL */
+body.ar{font-family:'Tajawal',sans-serif;direction:rtl;}
+body.ar nav{flex-direction:row-reverse;}
+body.ar .nav-links{flex-direction:row-reverse;}
+body.ar .hero-inner{direction:rtl;}
+body.ar .hero-btns{flex-direction:row-reverse;}
+body.ar .timeline::before{left:auto;right:0;}
+body.ar .t-item{padding-left:0;padding-right:32px;}
+body.ar .t-dot{left:auto;right:-38px;}
+body.ar .t-card:hover{transform:translateX(-8px);}
+body.ar .contact-card:hover{transform:translateX(-8px);}
+body.ar .section-title,body.ar .section-label,body.ar .hero-name{font-family:'Tajawal',sans-serif;}
+body.ar .hero-name{font-size:clamp(2.5rem,6vw,4.5rem);letter-spacing:0;}
+body.ar .skill-header{flex-direction:row-reverse;}
+body.ar .t-pts li::before{transform:scaleX(-1);}
+body.ar .badge-chips{flex-direction:row-reverse;}
+body.ar .contact-inner{direction:rtl;}
+body.ar .edu-card::before{left:auto;right:0;}
+body.ar .chips-cloud{flex-direction:row-reverse;}
 :root {
   --indigo: #4F46E5;
   --pink: #EC4899;
@@ -472,12 +500,13 @@ footer{
 <nav>
   <a href="#hero" class="nav-logo">Abdelrahman M.</a>
   <ul class="nav-links">
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#experience">Experience</a></li>
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="#education">Education</a></li>
-    <li><a href="#contact">Contact</a></li>
+    <li><a href="#skills" data-en="Skills" data-ar="المهارات">Skills</a></li>
+    <li><a href="#experience" data-en="Experience" data-ar="الخبرات">Experience</a></li>
+    <li><a href="#projects" data-en="Projects" data-ar="المشاريع">Projects</a></li>
+    <li><a href="#education" data-en="Education" data-ar="التعليم">Education</a></li>
+    <li><a href="#contact" data-en="Contact" data-ar="تواصل">Contact</a></li>
   </ul>
+  <button id="lang-btn" onclick="toggleLang()">عربي</button>
 </nav>
 
 <!-- HERO -->
@@ -485,15 +514,15 @@ footer{
   <div class="container">
     <div class="hero-inner">
       <div class="hero-left reveal">
-        <div class="avail-tag"><div class="avail-dot"></div>Available for New Opportunities</div>
-        <h1 class="hero-name">Abdelrahman<br>Mohamed</h1>
-        <p class="hero-role">
+        <div class="avail-tag"><div class="avail-dot"></div><span data-en="Available for New Opportunities" data-ar="متاح لفرص عمل جديدة">Available for New Opportunities</span></div>
+        <h1 class="hero-name" data-en="Abdelrahman<br>Mohamed" data-ar="عبدالرحمن<br>محمد">Abdelrahman<br>Mohamed</h1>
+        <p class="hero-role" data-en="<strong>IT Systems Developer & Cloud Support Engineer</strong><br>Building enterprise infrastructure, cloud systems, and AI-powered tools. Based in Riyadh with a transferable Iqama." data-ar="<strong>مطور أنظمة IT ومهندس دعم سحابي</strong><br>بشتغل على بناء البنية التحتية للمؤسسات وأنظمة السحابة وأدوات الذكاء الاصطناعي. مقيم في الرياض بإقامة قابلة للنقل.">
           <strong>IT Systems Developer & Cloud Support Engineer</strong><br>
           Building enterprise infrastructure, cloud systems, and AI-powered tools. Based in Riyadh with a transferable Iqama.
         </p>
         <div class="hero-btns">
-          <a href="#contact" class="btn-primary">Get in Touch</a>
-          <a href="#experience" class="btn-ghost">View Experience</a>
+          <a href="#contact" class="btn-primary" data-en="Get in Touch" data-ar="تواصل معي">Get in Touch</a>
+          <a href="#experience" class="btn-ghost" data-en="View Experience" data-ar="شوف خبراتي">View Experience</a>
         </div>
       </div>
       <div class="hero-card-wrap reveal-right">
@@ -934,50 +963,19 @@ const canvas=document.getElementById('particles');
 const ctx=canvas.getContext('2d');
 let W2,H2,particles=[];
 const COLORS=['#4F46E5','#EC4899','#06B6D4','#F59E0B'];
-
 function resize(){W2=canvas.width=window.innerWidth;H2=canvas.height=window.innerHeight;}
 resize();window.addEventListener('resize',resize);
-
 class Particle{
   constructor(){this.reset();}
-  reset(){
-    this.x=Math.random()*W2;this.y=Math.random()*H2;
-    this.vx=(Math.random()-.5)*.4;this.vy=(Math.random()-.5)*.4;
-    this.r=Math.random()*2+.5;
-    this.color=COLORS[Math.floor(Math.random()*COLORS.length)];
-    this.alpha=Math.random()*.5+.15;
-  }
-  update(){
-    this.x+=this.vx;this.y+=this.vy;
-    if(this.x<0||this.x>W2||this.y<0||this.y>H2)this.reset();
-  }
-  draw(){
-    ctx.beginPath();ctx.arc(this.x,this.y,this.r,0,Math.PI*2);
-    ctx.fillStyle=this.color;ctx.globalAlpha=this.alpha;ctx.fill();
-    ctx.globalAlpha=1;
-  }
+  reset(){this.x=Math.random()*W2;this.y=Math.random()*H2;this.vx=(Math.random()-.5)*.4;this.vy=(Math.random()-.5)*.4;this.r=Math.random()*2+.5;this.color=COLORS[Math.floor(Math.random()*COLORS.length)];this.alpha=Math.random()*.5+.15;}
+  update(){this.x+=this.vx;this.y+=this.vy;if(this.x<0||this.x>W2||this.y<0||this.y>H2)this.reset();}
+  draw(){ctx.beginPath();ctx.arc(this.x,this.y,this.r,0,Math.PI*2);ctx.fillStyle=this.color;ctx.globalAlpha=this.alpha;ctx.fill();ctx.globalAlpha=1;}
 }
-
 for(let i=0;i<80;i++)particles.push(new Particle());
-
 function drawParticles(){
   ctx.clearRect(0,0,W2,H2);
   particles.forEach(p=>p.update());
-  for(let i=0;i<particles.length;i++){
-    for(let j=i+1;j<particles.length;j++){
-      const dx=particles[i].x-particles[j].x;
-      const dy=particles[i].y-particles[j].y;
-      const dist=Math.sqrt(dx*dx+dy*dy);
-      if(dist<120){
-        ctx.beginPath();
-        ctx.moveTo(particles[i].x,particles[i].y);
-        ctx.lineTo(particles[j].x,particles[j].y);
-        ctx.strokeStyle=particles[i].color;
-        ctx.globalAlpha=(1-dist/120)*.15;
-        ctx.lineWidth=.6;ctx.stroke();ctx.globalAlpha=1;
-      }
-    }
-  }
+  for(let i=0;i<particles.length;i++){for(let j=i+1;j<particles.length;j++){const dx=particles[i].x-particles[j].x;const dy=particles[i].y-particles[j].y;const dist=Math.sqrt(dx*dx+dy*dy);if(dist<120){ctx.beginPath();ctx.moveTo(particles[i].x,particles[i].y);ctx.lineTo(particles[j].x,particles[j].y);ctx.strokeStyle=particles[i].color;ctx.globalAlpha=(1-dist/120)*.15;ctx.lineWidth=.6;ctx.stroke();ctx.globalAlpha=1;}}}
   particles.forEach(p=>p.draw());
   requestAnimationFrame(drawParticles);
 }
@@ -985,23 +983,353 @@ drawParticles();
 
 // ── SCROLL REVEAL ─────────────────────────────────────────────────────────
 const revealEls=document.querySelectorAll('.reveal,.reveal-left,.reveal-right,.t-item,.proj-card');
-const revObs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');revObs.unobserve(e.target);}});
-},{threshold:0.1});
+const revObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');revObs.unobserve(e.target);}});},{threshold:0.1});
 revealEls.forEach(el=>revObs.observe(el));
 
 // ── SKILL BARS ────────────────────────────────────────────────────────────
 const bars=document.querySelectorAll('.skill-bar');
-const barObs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){
-      const bar=e.target;
-      bar.style.width=bar.dataset.width+'%';
-      barObs.unobserve(bar);
+const barObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.style.width=e.target.dataset.width+'%';barObs.unobserve(e.target);}});},{threshold:0.3});
+bars.forEach(b=>barObs.observe(b));
+
+// ── LANGUAGE TOGGLE ───────────────────────────────────────────────────────
+let currentLang = 'en';
+
+const AR = {
+  // NAV
+  'nav-skills': 'المهارات',
+  'nav-exp': 'الخبرات',
+  'nav-proj': 'المشاريع',
+  'nav-edu': 'التعليم',
+  'nav-contact': 'تواصل',
+
+  // HERO
+  'hero-avail': 'متاح لفرص عمل جديدة',
+  'hero-name': 'عبدالرحمن<br>محمد',
+  'hero-role': '<strong>مطور أنظمة IT ومهندس دعم سحابي</strong><br>بشتغل على بناء البنية التحتية للمؤسسات وأنظمة السحابة وأدوات الذكاء الاصطناعي. مقيم في الرياض بإقامة قابلة للنقل.',
+  'hero-btn1': 'تواصل معي',
+  'hero-btn2': 'شوف خبراتي',
+  'stat1': 'سنين خبرة',
+  'stat2': 'تذكرة باليوم',
+  'stat3': 'رفع مبيعات',
+  'stat4': 'دول اشتغلت فيها',
+
+  // SECTIONS
+  'skills-label': 'الخبرة التقنية',
+  'skills-title': 'المهارات و<span>التقنيات</span>',
+  'exp-label': 'المسيرة المهنية',
+  'exp-title': 'خبراتي <span>الوظيفية</span>',
+  'proj-label': 'اللي بنيته',
+  'proj-title': 'أبرز <span>المشاريع</span>',
+  'sys-label': 'الأدوات والمنصات',
+  'sys-title': 'الأنظمة اللي <span>بستخدمها يومياً</span>',
+  'edu-label': 'الخلفية العلمية',
+  'edu-title': 'التعليم و<span>اللغات</span>',
+  'contact-label': 'خلينا نتكلم',
+  'contact-title': 'تواصل <span>معي</span>',
+
+  // SKILLS
+  'skill1': 'السحابة (Azure & AWS)',
+  'skill2': 'الشبكات وإدارة الأنظمة',
+  'skill3': 'Active Directory & NAS',
+  'skill4': 'أمن المعلومات والامتثال',
+  'skill5': 'Linux / Unix / Windows Server',
+  'skill6': 'Python و JavaScript',
+  'skill7': 'SQL وقواعد البيانات',
+  'skill8': 'Power BI وتحليل البيانات',
+  'skill9': 'إدارة الحوادث والـ SLA',
+  'skill10': 'أنظمة CRM & ERP',
+
+  // EXPERIENCE
+  'exp1-title': 'مطور أنظمة IT وقائد التحول الرقمي',
+  'exp1-co': 'حسين موتورز · الرياض، المملكة العربية السعودية',
+  'exp1-p1': 'قاد التحول الرقمي الكامل بدمج أنظمة IT مع عمليات المبيعات والتسويق',
+  'exp1-p2': 'بنى مساعد ذكاء اصطناعي للموقع يتعامل مع الاستفسارات على مدار الساعة',
+  'exp1-p3': 'طور لوحات Power BI لتحليل المبيعات والأسعار والمنافسة',
+  'exp1-p4': 'بنى تطبيق ويب داخلي (سير عمل من نقطة البيع للصيانة) بـ HTML وCSS وJS وPython',
+  'exp1-p5': 'أجرى تحليل ROI للمنصات وصمم أنظمة التقاط العملاء المحتملين',
+
+  'exp2-title': 'مسؤول IT وقائد العمليات التقنية',
+  'exp2-co': 'سامرتاون للعقارات · موقعي',
+  'exp2-p1': 'تولى ملكية كاملة لعمليات IT في الشهر الأول — تحول بدون توقف',
+  'exp2-p2': 'أدار Synology NAS وActive Directory وقواعد بيانات الموظفين',
+  'exp2-p3': 'قاد إطلاق الموقع: الدومين والاستضافة وتكامل البريد الإلكتروني',
+  'exp2-p4': 'شدد ضوابط الوصول وراجع الأمان وحدّث إدارة الأجهزة',
+
+  'exp3-title': 'مهندس دعم شبكة E-SIM',
+  'exp3-co': 'Mobimatter · عن بُعد',
+  'exp3-p1': 'قدم دعم تقني عبر Zendesk بمعالجة أكثر من 80 تذكرة يومياً',
+  'exp3-p2': 'شخّص مشاكل عبر iOS وAndroid والأجهزة القابلة للارتداء',
+  'exp3-p3': 'بنى توثيق قاعدة المعرفة ورفّع الاتجاهات المنهجية',
+
+  'exp4-title': 'مهندس دعم تقني',
+  'exp4-co': 'Optimum',
+  'exp4-p1': 'حقق معدل رضا 8.87% عبر تذاكر دعم الإنترنت والجوال',
+  'exp4-p2': 'قلل مشاكل الاتصال بنسبة 14% وحسّن FCR بنسبة 9%',
+  'exp4-p3': 'عزز مبيعات الـ upsell بنسبة 15%',
+
+  'exp5-title': 'مطور واجهة أمامية ومهندس دعم تقني',
+  'exp5-co': 'EARTech · إسطنبول، تركيا',
+  'exp5-p1': 'بنى وصان واجهات المستخدم بـ HTML وCSS وJavaScript',
+  'exp5-p2': 'استشارات ERP ومبادرات توفير تكاليف Azure وامتثال COBIT 2019',
+  'exp5-p3': 'تعاون مع فرق متعددة على تكامل الأنظمة',
+
+  // PROJECTS
+  'proj1-name': 'منصة NexCRM',
+  'proj1-desc': 'نظام CRM كامل من الصفر — عملاء محتملون، مسار مبيعات، حملات (إيميل/SMS/واتساب)، فواتير، تحليلات، ودعم متعدد مساحات العمل. شغّال وحي.',
+  'proj2-name': 'مساعد الموقع الذكي',
+  'proj2-desc': 'نشر شات بوت بالذكاء الاصطناعي لحسين موتورز باستخدام GPT API يتعامل مع استفسارات العملاء ويلتقط العملاء المحتملين 24 ساعة.',
+  'proj3-name': 'لوحة مبيعات Power BI',
+  'proj3-desc': 'بنى لوحات تحليل تنافسي للأسعار وأداء المبيعات تمكّن الإدارة من اتخاذ قرارات مبنية على البيانات.',
+  'proj4-name': 'إعداد بنية تحتية IT كاملة',
+  'proj4-desc': 'نشر بيئة IT مؤسسية كاملة — Active Directory وNAS والبريد الإلكتروني وإطلاق الموقع وتقوية الأمان بدون توقف.',
+  'proj5-name': 'تطبيق ويب من نقطة البيع للصيانة',
+  'proj5-desc': 'تطبيق ويب تشغيلي داخلي يربط أنظمة نقطة البيع بسير عمل الصيانة، يقلل وقت التسليم اليدوي.',
+  'proj6-name': 'شات بوت AI — مشروع الجامعة',
+  'proj6-desc': 'مشروع التخرج في جامعة أوسكودار — شات بوت ذكاء اصطناعي وظيفي بإمكانيات معالجة اللغة الطبيعية.',
+
+  // SYSTEMS
+  'sys1-name': 'Odoo',
+  'sys1-cat': 'ERP / عمليات الأعمال',
+  'sys2-name': 'SAP',
+  'sys2-cat': 'تخطيط موارد المؤسسة',
+  'sys3-name': 'Frappe / ERPNext',
+  'sys3-cat': 'ERP مفتوح المصدر',
+  'sys4-name': 'Azure Active Directory',
+  'sys4-cat': 'الهوية والوصول',
+  'sys5-name': 'Azure & AWS',
+  'sys5-cat': 'منصات السحابة',
+  'sys6-name': 'Zendesk',
+  'sys6-cat': 'التذاكر والدعم',
+  'sys7-name': 'Power BI',
+  'sys7-cat': 'ذكاء الأعمال',
+  'sys8-name': 'Salesforce',
+  'sys8-cat': 'منصة CRM',
+
+  // EDUCATION
+  'edu1-degree': 'بكالوريوس هندسة البرمجيات',
+  'edu1-uni': 'جامعة أوسكودار · إسطنبول، تركيا · 2023',
+  'edu1-gpa': 'المعدل: 3.04 / 4.0 · مشروع شات بوت AI',
+  'edu2-degree': 'الشهادات المهنية',
+  'edu2-uni': 'COBIT 2019 (ISACA) · ITIL Foundation · PMP — LinkedIn · Cisco Cybersecurity · Google Digital Marketing · اعتماد المهندس السعودي · SAP MM · IEEE AI Symposium',
+  'edu2-gpa': '8 شهادات مهنية',
+
+  // LANGUAGES
+  'lang1': 'عربي',
+  'lang1-level': 'اللغة الأم',
+  'lang2': 'إنجليزي',
+  'lang2-level': 'طلاقة',
+  'lang3': 'تركي',
+  'lang3-level': 'متوسط',
+
+  // CONTACT
+  'contact-phone-label': 'الجوال',
+  'contact-email-label': 'البريد الإلكتروني',
+  'contact-loc-label': 'الموقع',
+  'contact-loc-val': 'الرياض، المملكة العربية السعودية',
+  'contact-status-label': 'الحالة',
+  'contact-status-val': 'إقامة قابلة للنقل · رخصة قيادة',
+  'contact-li-label': 'لينكدإن',
+
+  // FOOTER
+  'footer-role': 'مطور أنظمة IT ومهندس دعم سحابي · الرياض، المملكة العربية السعودية',
+};
+
+const EN = {
+  'nav-skills':'Skills','nav-exp':'Experience','nav-proj':'Projects','nav-edu':'Education','nav-contact':'Contact',
+  'hero-avail':'Available for New Opportunities',
+  'hero-name':'Abdelrahman<br>Mohamed',
+  'hero-role':'<strong>IT Systems Developer & Cloud Support Engineer</strong><br>Building enterprise infrastructure, cloud systems, and AI-powered tools. Based in Riyadh with a transferable Iqama.',
+  'hero-btn1':'Get in Touch','hero-btn2':'View Experience',
+  'stat1':'Years Experience','stat2':'Tickets / Day','stat3':'Sales Uplift','stat4':'Countries Worked',
+  'skills-label':'Technical Expertise','skills-title':'Skills & <span>Technologies</span>',
+  'exp-label':'Career','exp-title':'Work <span>Experience</span>',
+  'proj-label':"What I've Built",'proj-title':'Key <span>Projects</span>',
+  'sys-label':'Tools & Platforms','sys-title':'Systems I <span>Use Daily</span>',
+  'edu-label':'Background','edu-title':'Education & <span>Languages</span>',
+  'contact-label':"Let's Talk",'contact-title':'Get in <span>Touch</span>',
+  'skill1':'Cloud (Azure & AWS)','skill2':'Networking & System Admin','skill3':'Active Directory & NAS',
+  'skill4':'IT Security & Compliance','skill5':'Linux / Unix / Windows Server',
+  'skill6':'Python & JavaScript','skill7':'SQL & Databases','skill8':'Power BI & Data Analytics',
+  'skill9':'Incident Management & SLA','skill10':'CRM & ERP Systems',
+  'exp1-title':'IT Systems Developer & Digital Transformation Lead',
+  'exp1-co':'Hussein Motors · Riyadh, Saudi Arabia',
+  'exp1-p1':'Led full digital transformation integrating IT systems with sales and marketing operations',
+  'exp1-p2':'Built AI-powered website assistant handling after-hours inquiries 24/7',
+  'exp1-p3':'Developed Power BI dashboards for sales, pricing analysis, and competitive intelligence',
+  'exp1-p4':'Built internal web app (POS-to-maintenance workflow) using HTML, CSS, JS & Python',
+  'exp1-p5':'Conducted platform ROI analysis and designed lead capture systems',
+  'exp2-title':'IT Administrator / Technical Operations Lead',
+  'exp2-co':'SummerTown Real Estate · On-site, Riyadh',
+  'exp2-p1':'Full ownership of company IT operations within the first month — zero downtime transition',
+  'exp2-p2':'Administered Synology NAS, Active Directory, and employee databases',
+  'exp2-p3':'Led website launch: domain, hosting, and corporate email integration',
+  'exp2-p4':'Tightened access controls, audited security, and standardized device management',
+  'exp3-title':'Network E-SIM Support Engineer',
+  'exp3-co':'Mobimatter · Part-time Remote',
+  'exp3-p1':'Delivered technical support via Zendesk handling 80+ tickets/day',
+  'exp3-p2':'Diagnosed issues across iOS, Android, and wearable devices globally',
+  'exp3-p3':'Built knowledge base documentation and escalated systemic trends',
+  'exp4-title':'Tech Support Engineer','exp4-co':'Optimum',
+  'exp4-p1':'Achieved 8.87% satisfaction rate across internet and mobile support tickets',
+  'exp4-p2':'Reduced connection issues by 14%, improved First Call Resolution by 9%',
+  'exp4-p3':'Boosted upsell sales by 15%',
+  'exp5-title':'Frontend Developer & Technical Support Engineer',
+  'exp5-co':'EARTech · Istanbul, Turkey',
+  'exp5-p1':'Built and maintained frontend interfaces using HTML, CSS, and JavaScript',
+  'exp5-p2':'ERP consulting, Azure cost-saving initiatives, and COBIT 2019 compliance',
+  'exp5-p3':'Collaborated with cross-functional teams on system integrations',
+  'proj1-name':'NexCRM Platform',
+  'proj1-desc':'Full CRM system built from scratch — leads, pipeline, campaigns (Email/SMS/WhatsApp), invoicing, analytics, and multi-workspace support. Live and functional.',
+  'proj2-name':'AI Website Assistant',
+  'proj2-desc':'Deployed AI-powered chatbot for Hussein Motors using GPT API, handling after-hours customer inquiries and capturing leads 24/7 without human intervention.',
+  'proj3-name':'Power BI Sales Dashboard',
+  'proj3-desc':'Built competitive pricing analysis and sales performance dashboards enabling data-driven management decisions and strategic market positioning.',
+  'proj4-name':'Full IT Infrastructure Setup',
+  'proj4-desc':'Deployed complete enterprise IT environment — Active Directory, Synology NAS, corporate email, website launch, and security hardening with zero downtime.',
+  'proj5-name':'POS-to-Maintenance Web App',
+  'proj5-desc':'Internal operational web application bridging POS systems to maintenance workflows, reducing manual handoff time and improving operational visibility.',
+  'proj6-name':'AI Chatbot — University Project',
+  'proj6-desc':'Final year project at Üsküdar University — built a functional AI chatbot with natural language processing capabilities.',
+  'sys1-name':'Odoo','sys1-cat':'ERP / Business Ops',
+  'sys2-name':'SAP','sys2-cat':'Enterprise Resource Planning',
+  'sys3-name':'Frappe / ERPNext','sys3-cat':'Open Source ERP',
+  'sys4-name':'Azure Active Directory','sys4-cat':'Identity & Access',
+  'sys5-name':'Azure & AWS','sys5-cat':'Cloud Platforms',
+  'sys6-name':'Zendesk','sys6-cat':'Ticketing & Support',
+  'sys7-name':'Power BI','sys7-cat':'Business Intelligence',
+  'sys8-name':'Salesforce','sys8-cat':'CRM Platform',
+  'edu1-degree':'BSc Software Engineering',
+  'edu1-uni':'Üsküdar University (UU) · Istanbul, Turkey · 2023',
+  'edu1-gpa':'GPA: 3.04 / 4.0 · AI Chatbot Project',
+  'edu2-degree':'Key Certifications',
+  'edu2-uni':'COBIT 2019 (ISACA) · ITIL Foundation · PMP — LinkedIn · Cisco Cybersecurity · Google Digital Marketing · Saudi Engineer Accreditation · SAP MM · IEEE AI Symposium',
+  'edu2-gpa':'8 Professional Certifications',
+  'lang1':'🇸🇦 Arabic','lang1-level':'Native',
+  'lang2':'🇬🇧 English','lang2-level':'Fluent',
+  'lang3':'🇹🇷 Turkish','lang3-level':'Intermediate',
+  'contact-phone-label':'Phone','contact-email-label':'Email',
+  'contact-loc-label':'Location','contact-loc-val':'Riyadh, Saudi Arabia',
+  'contact-status-label':'Status','contact-status-val':'Transferable Iqama · Driver License',
+  'contact-li-label':'LinkedIn',
+  'footer-role':'IT Systems Developer & Cloud Support Engineer · Riyadh, Saudi Arabia',
+};
+
+function t(key){ return (currentLang==='ar' ? AR[key] : EN[key]) || ''; }
+
+function applyTranslations(){
+  const isAr = currentLang === 'ar';
+
+  // Nav links
+  document.querySelector('[href="#skills"]').innerHTML = t('nav-skills');
+  document.querySelector('[href="#experience"]').innerHTML = t('nav-exp');
+  document.querySelector('[href="#projects"]').innerHTML = t('nav-proj');
+  document.querySelector('[href="#education"]').innerHTML = t('nav-edu');
+  document.querySelector('[href="#contact"]').innerHTML = t('nav-contact');
+
+  // Hero
+  document.querySelector('.avail-tag span').innerHTML = t('hero-avail');
+  document.querySelector('.hero-name').innerHTML = t('hero-name');
+  document.querySelector('.hero-role').innerHTML = t('hero-role');
+  document.querySelectorAll('.hero-btns a')[0].innerHTML = t('hero-btn1');
+  document.querySelectorAll('.hero-btns a')[1].innerHTML = t('hero-btn2');
+  const stats = document.querySelectorAll('.stat-l');
+  ['stat1','stat2','stat3','stat4'].forEach((k,i)=>{ if(stats[i]) stats[i].innerHTML=t(k); });
+
+  // Section labels & titles
+  const secLabels = document.querySelectorAll('.section-label');
+  const secTitles = document.querySelectorAll('.section-title');
+  const labelKeys = ['skills-label','exp-label','proj-label','sys-label','edu-label','contact-label'];
+  const titleKeys = ['skills-title','exp-title','proj-title','sys-title','edu-title','contact-title'];
+  secLabels.forEach((el,i)=>{ if(labelKeys[i]) el.innerHTML=t(labelKeys[i]); });
+  secTitles.forEach((el,i)=>{ if(titleKeys[i]) el.innerHTML=t(titleKeys[i]); });
+
+  // Skill names
+  const skillNames = document.querySelectorAll('.skill-name');
+  ['skill1','skill2','skill3','skill4','skill5','skill6','skill7','skill8','skill9','skill10'].forEach((k,i)=>{
+    if(skillNames[i]) skillNames[i].innerHTML=t(k);
+  });
+
+  // Experience
+  const tTitles = document.querySelectorAll('.t-title');
+  const tCos = document.querySelectorAll('.t-co');
+  const tPtsAll = document.querySelectorAll('.t-pts');
+  const expData = [
+    {t:'exp1-title',c:'exp1-co',pts:['exp1-p1','exp1-p2','exp1-p3','exp1-p4','exp1-p5']},
+    {t:'exp2-title',c:'exp2-co',pts:['exp2-p1','exp2-p2','exp2-p3','exp2-p4']},
+    {t:'exp3-title',c:'exp3-co',pts:['exp3-p1','exp3-p2','exp3-p3']},
+    {t:'exp4-title',c:'exp4-co',pts:['exp4-p1','exp4-p2','exp4-p3']},
+    {t:'exp5-title',c:'exp5-co',pts:['exp5-p1','exp5-p2','exp5-p3']},
+  ];
+  expData.forEach((exp,i)=>{
+    if(tTitles[i]) tTitles[i].innerHTML=t(exp.t);
+    if(tCos[i]) tCos[i].innerHTML=t(exp.c);
+    if(tPtsAll[i]){
+      const lis=tPtsAll[i].querySelectorAll('li');
+      exp.pts.forEach((k,j)=>{ if(lis[j]) lis[j].innerHTML=t(k); });
     }
   });
-},{threshold:0.3});
-bars.forEach(b=>barObs.observe(b));
+
+  // Projects
+  const projNames = document.querySelectorAll('.proj-name');
+  const projDescs = document.querySelectorAll('.proj-desc');
+  ['proj1','proj2','proj3','proj4','proj5','proj6'].forEach((k,i)=>{
+    if(projNames[i]) projNames[i].innerHTML=t(k+'-name');
+    if(projDescs[i]) projDescs[i].innerHTML=t(k+'-desc');
+  });
+
+  // Systems
+  const sysNames = document.querySelectorAll('.sys-name');
+  const sysCats = document.querySelectorAll('.sys-cat');
+  ['sys1','sys2','sys3','sys4','sys5','sys6','sys7','sys8'].forEach((k,i)=>{
+    if(sysNames[i]) sysNames[i].innerHTML=t(k+'-name');
+    if(sysCats[i]) sysCats[i].innerHTML=t(k+'-cat');
+  });
+
+  // Education
+  const eduDegrees = document.querySelectorAll('.edu-degree');
+  const eduUnis = document.querySelectorAll('.edu-uni');
+  const eduGpas = document.querySelectorAll('.edu-gpa');
+  ['edu1','edu2'].forEach((k,i)=>{
+    if(eduDegrees[i]) eduDegrees[i].innerHTML=t(k+'-degree');
+    if(eduUnis[i]) eduUnis[i].innerHTML=t(k+'-uni');
+    if(eduGpas[i]) eduGpas[i].innerHTML=t(k+'-gpa');
+  });
+
+  // Languages
+  const langNames = document.querySelectorAll('.lang-name');
+  const langLevels = document.querySelectorAll('.lang-level');
+  ['lang1','lang2','lang3'].forEach((k,i)=>{
+    if(langNames[i]) langNames[i].innerHTML=t(k);
+    if(langLevels[i]) langLevels[i].innerHTML=t(k+'-level');
+  });
+
+  // Contact
+  const contactLabels = document.querySelectorAll('.contact-label');
+  const contactVals = document.querySelectorAll('.contact-val');
+  if(contactLabels[0]) contactLabels[0].innerHTML=t('contact-phone-label');
+  if(contactLabels[1]) contactLabels[1].innerHTML=t('contact-email-label');
+  if(contactLabels[2]) contactLabels[2].innerHTML=t('contact-loc-label');
+  if(contactVals[2]) contactVals[2].innerHTML=t('contact-loc-val');
+  if(contactLabels[3]) contactLabels[3].innerHTML=t('contact-status-label');
+  if(contactVals[3]) contactVals[3].innerHTML=t('contact-status-val');
+  if(contactLabels[4]) contactLabels[4].innerHTML=t('contact-li-label');
+
+  // Footer
+  const footerPs = document.querySelectorAll('footer p');
+  if(footerPs[1]) footerPs[1].innerHTML=t('footer-role');
+
+  // Button
+  document.getElementById('lang-btn').innerHTML = isAr ? 'English' : 'عربي';
+}
+
+function toggleLang(){
+  currentLang = currentLang === 'en' ? 'ar' : 'en';
+  const isAr = currentLang === 'ar';
+  document.body.classList.toggle('ar', isAr);
+  document.documentElement.setAttribute('lang', isAr ? 'ar' : 'en');
+  document.documentElement.setAttribute('dir', isAr ? 'rtl' : 'ltr');
+  applyTranslations();
+}
 </script>
 </body>
 </html>
